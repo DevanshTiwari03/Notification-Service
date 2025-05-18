@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Notifications</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Notifications for User: <%= userId %></h1>
+    
+    <div class="actions">
+      <a href="/" class="btn secondary">Home</a>
+      <a href="/send" class="btn primary">Send New Notification</a>
+    </div>
+    
+    <div class="card">
+      <% if (notifications.length === 0) { %>
+        <div class="empty-state">
+          <p>No notifications found for this user.</p>
+        </div>
+      <% } else { %>
+        <div class="notifications-list">
+          <% notifications.forEach(notification => { %>
+            <div class="notification-item status-<%= notification.status %>">
+              <div class="notification-header">
+                <h3><%= notification.title %></h3>
+                <span class="notification-type <%= notification.type %>"><%= notification.type %></span>
+                <span class="notification-status"><%= notification.status %></span>
+              </div>
+              <p class="notification-message"><%= notification.message %></p>
+              <div class="notification-meta">
+                <span class="notification-time">
+                  <%= new Date(notification.createdAt).toLocaleString() %>
+                </span>
+                <% if (notification.attempts > 1) { %>
+                  <span class="notification-attempts">
+                    Attempts: <%= notification.attempts %>
+                  </span>
+                <% } %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="refresh-section">
+      <button id="refreshBtn" class="btn secondary">Refresh Notifications</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('refreshBtn').addEventListener('click', function() {
+      location.reload();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Service</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Notification Service</h1>
+    
+    <div class="card">
+      <h2>Welcome to the Notification Service</h2>
+      <p>This service allows you to send and view notifications.</p>
+      
+      <div class="actions">
+        <a href="/send" class="btn primary">Send Notification</a>
+        <div class="user-input">
+          <input type="text" id="userId" placeholder="Enter User ID">
+          <button onclick="viewDashboard()" class="btn secondary">View Notifications</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="api-info">
+      <h3>API Endpoints:</h3>
+      <ul>
+        <li><strong>POST /notifications</strong> - Send a notification</li>
+        <li><strong>GET /users/{id}/notifications</strong> - Get user notifications</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function viewDashboard() {
+      const userId = document.getElementById('userId').value;
+      if (userId) {
+        window.location.href = `/dashboard/${userId}`;
+      } else {
+        alert('Please enter a User ID');
+      }
+    }
+  </script>
+</body>
+</html>

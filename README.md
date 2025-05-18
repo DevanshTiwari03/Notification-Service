@@ -112,3 +112,19 @@ GET /users/123/notifications
 5. Implement notification preferences for users
 6. Add more comprehensive error handling and logging
 7. Add unit and integration tests
+
+## CloudAMQP Setup
+
+This application uses CloudAMQP for message queueing. To set it up:
+
+1. Sign up for a CloudAMQP account at [cloudamqp.com](https://www.cloudamqp.com/)
+2. Create a new instance (the free tier "Lemur" plan works for development)
+3. Once your instance is created, copy the AMQP URL from your instance details
+4. Create a `.env` file in the project root with the following content:
+   ```
+   RABBITMQ_URL=amqps://your-cloudamqp-url-here
+   PORT=3000
+   ```
+5. Replace `your-cloudamqp-url-here` with the actual URL from CloudAMQP
+
+The application will automatically use this URL to connect to CloudAMQP instead of a local RabbitMQ server.

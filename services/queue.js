@@ -1,5 +1,7 @@
 const amqp = require("amqplib")
 const notificationService = require("./notificationService")
+// Add dotenv configuration
+require('dotenv').config()
 
 let connection = null
 let channel = null
@@ -7,9 +9,16 @@ let channel = null
 // Connect to RabbitMQ
 async function connect() {
   try {
-    // In a real app, the connection URL would come from environment variables
-    const url = process.env.RABBITMQ_URL || "amqp://localhost"
-    connection = await amqp.connect(url)
+    // Use CloudAMQP URL from environment variable
+    const url = process.env.RABBITMQ_URL;
+    // console.log(`Connecting to RabbitMQ at: ${url.startsWith('amqps://') ? 'CloudAMQP (SSL)' : 'Local RabbitMQ'}`)
+    
+    // Set connection options for CloudAMQP SSL connections
+    const options = url.startsWith('amqps://') ? {
+      heartbeat: 60, // Recommended CloudAMQP heartbeat value
+    } : {}
+    
+    connection = await amqp.connect(url, options)
     channel = await connection.createChannel()
 
     // Create the notifications queue
